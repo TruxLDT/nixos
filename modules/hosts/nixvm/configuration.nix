@@ -1,9 +1,16 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.vm = { pkgs, lib, ... }: {
+  flake.nixosConfigurations.nixvm = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.nixvm
+      self.nixosModules.myHomeManager
+    ];
+  };
+
+  flake.nixosModules.nixvm = { pkgs, lib, ... }: {
     # import any other modules from here
     imports = [
-      self.nixosModules.vmHardware
+      self.nixosModules.nixvmHardware
       self.nixosModules.niri
     ];
     
@@ -86,6 +93,8 @@
 
 		];
 	};
+
+	home-manager.users.trux = self.homeModules.truxModule;
 	
 	programs.fish = {
 		enable = true;
@@ -113,30 +122,11 @@
 	# $ nix search wget
 
 	environment.systemPackages = with pkgs; [
-		bat
-		brave
-		fastfetch
-		fish
-		home-manager
-		htop
-		kdePackages.kate
-		kitty
-		lm_sensors
-		neovim
-		nix-search-tv
-    luarocks
-    lua
-		speedtest-cli
-		kdePackages.dolphin
-		gcc
-		tmux
-		vscode
-		unzip
-		wineWow64Packages.unstable
-		xwayland
-		playerctl
-		git
-		pavucontrol
+	  home-manager
+	  lm_sensors
+	  gcc
+	  wineWow64Packages.unstable
+	  xwayland
 	];
 
 	fonts.packages = with pkgs; [
