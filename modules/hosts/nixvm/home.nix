@@ -18,6 +18,7 @@
   flake.homeModules.truxModule = { pkgs, ... }: {
      
       programs.fish.enable = true;
+      
       home.packages = with pkgs; [
       # Terminals & Shells
 

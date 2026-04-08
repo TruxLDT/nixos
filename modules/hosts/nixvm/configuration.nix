@@ -28,6 +28,7 @@
 
 	networking.hostName = "nixvm"; # Define your hostname.
 
+	services.openssh.enable = true;
 	# Enable networking
 	networking.networkmanager.enable = true;
 
@@ -57,6 +58,7 @@
 		wayland.enable = true;
 	};
 
+	programs.niri.enable = true;
 
 	# Configure keymap in X11
 	services.xserver.xkb = {
@@ -94,21 +96,9 @@
 		];
 	};
 
+	programs.fish.enable = true;
 	home-manager.users.trux = self.homeModules.truxModule;
 	
-	programs.fish = {
-		enable = true;
-		shellAbbrs = {
-			ll = "ls -la";
-			nrs = "nixos-rebuild switch --flake ~/myNixOS#.myMachine";
-		};
-	};
-
-	programs.niri.enable = true;
-
-	# Install firefox.
-	programs.firefox.enable = true;
-
 	# Allow unfree packages
 	nixpkgs.config.allowUnfree = true;
 
