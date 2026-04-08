@@ -1,9 +1,9 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.goombaConfiguration = { pkgs, lib, ... }: {
+  flake.nixosModules.vm = { pkgs, lib, ... }: {
     # import any other modules from here
     imports = [
-      self.nixosModules.myMachineHardware
+      self.nixosModules.vmHardware
       self.nixosModules.niri
     ];
     
@@ -19,7 +19,7 @@
 	# Use latest kernel.
 	# boot.kernelPackages = pkgs.linuxPackages_zen;
 
-	networking.hostName = "goomba"; # Define your hostname.
+	networking.hostName = "nixvm"; # Define your hostname.
 
 	# Enable networking
 	networking.networkmanager.enable = true;

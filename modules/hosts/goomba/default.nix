@@ -1,7 +1,7 @@
 { self, inputs, ... }: {
-  flake.nixosConfigurations.myMachine = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.goomba = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      self.nixosModules.myMachineConfiguration
+      self.nixosModules.goombaConfiguration
     ];
   };
 }
