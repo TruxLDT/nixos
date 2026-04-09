@@ -1,7 +1,7 @@
 { self, inputs, ... }: {
-  flake.nixosConfigurations.vm = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.nixvm = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      self.nixosModules.vm
+      self.nixosModules.nixvmConfiguration
     ];
   };
 }
