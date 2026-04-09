@@ -1,12 +1,5 @@
 { self, inputs, ... }: {
 
-  flake.nixosConfigurations.nixvm = inputs.nixpkgs.lib.nixosSystem {
-    modules = [
-      self.nixosModules.nixvmConfigurations
-      self.nixosModules.myHomeManager
-    ];
-  };
-
   flake.nixosModules.nixvmConfiguration = { pkgs, lib, ... }: {
     # import any other modules from here
     imports = [
