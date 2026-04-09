@@ -17,6 +17,7 @@
       device = "/dev/vda";
       useOSProber = true;
     };
+
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
     # --- Networking & Security ---

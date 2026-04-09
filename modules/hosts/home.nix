@@ -53,6 +53,8 @@
       fd
       trashy
       git
+      nixfmt
+      nil
     
       # Development (user-level)
       lua51Packages.lua
