@@ -8,16 +8,11 @@
     ];
     
 	# Bootloader.
-	# boot.loader.grub.enable = true;
-	# boot.loader.limine.enable = true;
-	# boot.loader.efi.canTouchEfiVariables = true;
+	boot.loader.limine.enable = true;
+	boot.loader.efi.canTouchEfiVariables = true;
 
-	boot.loader.grub.enable = true;
-  	boot.loader.grub.device = "/dev/vda";
-  	boot.loader.grub.useOSProber = true;
-
-	# Use latest kernel.
-	# boot.kernelPackages = pkgs.linuxPackages_zen;
+  # Use latest kernel.
+	boot.kernelPackages = pkgs.linuxPackages_zen;
 
 	networking.hostName = "goomba"; # Define your hostname.
 
@@ -113,30 +108,11 @@
 	# $ nix search wget
 
 	environment.systemPackages = with pkgs; [
-		bat
-		brave
-		fastfetch
-		fish
 		home-manager
-		htop
-		kdePackages.kate
-		kitty
 		lm_sensors
-		neovim
-		nix-search-tv
-    luarocks
-    lua
-		speedtest-cli
-		kdePackages.dolphin
 		gcc
-		tmux
-		vscode
-		unzip
 		wineWow64Packages.unstable
 		xwayland
-		playerctl
-		git
-		pavucontrol
 	];
 
 	fonts.packages = with pkgs; [
