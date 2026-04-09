@@ -1,26 +1,27 @@
 { self, inputs, ... }: {
   flake.nixosModules.goombaConfiguration = { pkgs, lib, ... }: {
-    # import any other modules from here
     imports = [
       self.nixosModules.goombaHardware
       self.nixosModules.niri
     ];
-    
-    # Bootloader.
+
+    # --- System Core ---
+    system.stateVersion = "25.11";
+    networking.hostName = "goomba";
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nixpkgs.config.allowUnfree = true;
+
+    # --- Bootloader ---
     boot.loader.limine.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
-
-    # Use latest kernel.
     boot.kernelPackages = pkgs.linuxPackages_zen;
-    networking.hostName = "goomba"; 
 
-    # Enable networking
+    # --- Networking & Security ---
     networking.networkmanager.enable = true;
+    security.rtkit.enable = true;
 
-    # Set your time zone.
+    # --- Localization ---
     time.timeZone = "America/Chicago";
-
-    # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
     i18n.extraLocaleSettings = {
       LC_ADDRESS = "en_US.UTF-8";
@@ -34,23 +35,39 @@
       LC_TIME = "en_US.UTF-8";
     };
 
-    # Enable the X11 windowing system.
-    services.xserver.enable = true;
+    # --- User Account & Shell ---
+    users.users.trux = {
+      isNormalUser = true;
+      description = "trux";
+      shell = pkgs.fish;
+      extraGroups = [ "networkmanager" "wheel" "audio" "video" "input" ];
+      packages = with pkgs; [];
+    };
+
+    programs.fish = {
+      enable = true;
+      shellAbbrs = { ll = "ls -la"; };
+    };
+
+    home-manager.users.trux = self.homeModules.truxModule;
+
+    # --- Desktop Environment & UI ---
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
     };
 
-    # Configure keymap in X11
-    services.xserver.xkb = {
-      layout = "us";
-      variant = "";
+    services.xserver = {
+      enable = true;
+      xkb = { layout = "us"; variant = ""; };
     };
 
-    # Enable CUPS to print documents.
+    programs.niri.enable = true;
+    programs.firefox.enable = true;
+    services.power-profiles-daemon.enable = true;
     services.printing.enable = true;
 
-    # Enable sound with pipewire.
+    # --- Audio (Pipewire) ---
     services.pipewire = {
       enable = true;
       audio.enable = true;
@@ -59,33 +76,7 @@
       alsa.support32Bit = true;
     };
 
-    security.rtkit.enable = true;
-
-    # Define a user account.
-    users.users.trux = {
-      isNormalUser = true;
-      description = "trux";
-      shell = pkgs.fish;
-      extraGroups = [ "networkmanager" "wheel" "audio" "video" "input"];
-      packages = with pkgs; [];
-    };
-    
-    programs.fish = {
-      enable = true;
-      shellAbbrs = {
-        ll = "ls -la";
-      };
-    };
-
-    home-manager.users.trux = self.homeModules.truxModule;
-    programs.niri.enable = true;
-    programs.firefox.enable = true;
-    nixpkgs.config.allowUnfree = true;
-    services.power-profiles-daemon.enable = true;
-  
-    # Enable experimental settings
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
+    # --- Software & Fonts ---
     environment.systemPackages = with pkgs; [
       home-manager
       lm_sensors
@@ -99,8 +90,6 @@
       nerd-fonts.droid-sans-mono
       font-awesome_4
     ];
-
-    # This value determines the NixOS release from which the default
-    system.stateVersion = "25.11"; 
   };
-}   
+}
+   
