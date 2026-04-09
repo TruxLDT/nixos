@@ -115,6 +115,7 @@
 	  home-manager
 	  lm_sensors
 	  gcc
+	  mesa
 	  wineWow64Packages.unstable
 	  xwayland
 	];

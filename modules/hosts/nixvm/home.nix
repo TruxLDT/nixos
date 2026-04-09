@@ -1,4 +1,4 @@
-{ self, inputs, ... }: {
+{ self, inputs, config, lib, ... }: {
 
   # This is your standalone home-manager configuration, meant to be used on non-nixos machines
   # with the home-manager command
@@ -15,10 +15,15 @@
 
   # This is your home.nix, your module where you configure home-manager
   # It's imported both in standalone configuration above, and in your nixos configuration
+  
+
+
   flake.homeModules.truxModule = { pkgs, ... }: {
-     
+
       programs.fish.enable = true;
-      
+
+      xdg.configFile."nvim".source = ../../config/nvim;
+
       home.packages = with pkgs; [
       # Terminals & Shells
 
