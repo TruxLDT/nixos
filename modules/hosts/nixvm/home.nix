@@ -32,6 +32,7 @@
     
       # Editors & IDEs
       neovim
+      lua51Packages.tree-sitter-cli
       vscode
       kdePackages.kate
     
@@ -46,10 +47,15 @@
       speedtest-cli
       unzip
       playerctl
+      lazygit
+      fzf
+      ripgrep
+      fd
+      trashy
       git
     
       # Development (user-level)
-      lua
+      lua51Packages.lua
       luarocks
     
       # KDE Apps (user-specific)
